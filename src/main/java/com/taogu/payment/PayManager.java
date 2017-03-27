@@ -2,54 +2,49 @@ package com.taogu.payment;
 
 import java.net.MalformedURLException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import com.taogu.payment.bean.BusinessData;
-import com.taogu.payment.exception.BusinessDataException;
+import com.taogu.payment.bean.PayParams;
 import com.taogu.payment.exception.PayExeption;
 import com.taogu.payment.util.ClassUtil;
-
-import sun.misc.ClassLoaderUtil;
 
 public class PayManager {
 
   private final static Logger log = Logger.getLogger("PayChannel");
   private static HashMap<String, Class<Pay>> payMap = new HashMap<String, Class<Pay>>();
-  private static HashMap<String, Class<Business>> businessMap = new HashMap<String, Class<Business>>();
   private static ScheduledExecutorService es = Executors.newSingleThreadScheduledExecutor();
+  // 10s中扫描一次插件目录
   private long period = 10;
 
   /**
    * 下单接口
-   * @param data 订单业务数据
-   * @return 订单id
+   * @param params 订单业务数据
+   * @return 订单
    * @throws IllegalAccessException 
    * @throws InstantiationException 
-   * @throws BusinessDataException 
+   * @throws PayExeption 
    */
-  public static String makeOrder(BusinessData data) throws PayExeption, InstantiationException, IllegalAccessException {
-    Class<Business> businessClass = businessMap.get(data.getBusinessType());
-    if (businessClass == null) {
-      throw new PayExeption("not support this businessType!");
+  public static Map<String, Object> makeOrder(PayParams params) throws PayExeption, InstantiationException, IllegalAccessException {
+    Class<Pay> payClass = payMap.get(params.getPayType());
+    if (payClass == null) {
+      throw new PayExeption("not support this payType!");
     }
-    if (ClassUtil.getInstance(businessClass).saveBusinessData(data)) {
-      Class<Pay> payClass = payMap.get(data.getPayType());
-      if (payClass == null) {
-        throw new PayExeption("not support this payType!");
-      }
-      String orderId = ClassUtil.getInstance(payClass).unifiedOrder(data);
-      log.info("the order make success: " + orderId);
-      return orderId;
-    }
-    log.info("the order make failed!");
-    return null;
+    Map<String, Object> orderMap = ClassUtil.getInstance(payClass).unifiedOrder(params);
+    log.info("the order make success: " + orderMap);
+    return orderMap;
   }
 
+  public static Class<Pay> addPayType(Class<Pay> pay) {
+    log.info("add one payType ,the type is" + pay.getName());
+    return payMap.put(pay.getName().toLowerCase(), pay);
+  }
+
+  // 开始扫描支付插件
   public void startPluginScan() {
     es.scheduleAtFixedRate(new Runnable() {
       public void run() {
@@ -67,16 +62,11 @@ public class PayManager {
     }, period, period, TimeUnit.SECONDS);
   }
 
-  public static Class<Pay> addChannel(Class<Pay> pay) {
-    log.info("add one channel ,the name is" + pay.getName());
-    return payMap.put(pay.getName().toLowerCase(), pay);
-  }
-
-  public static Set<String> getChannels() {
+  public static Set<String> getPayTypes() {
     return payMap.keySet();
   }
 
-  public static Class<Pay> getPay(String name) {
-    return payMap.get(name);
+  public static Class<Pay> getPay(String type) {
+    return payMap.get(type);
   }
 }

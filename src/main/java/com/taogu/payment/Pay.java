@@ -1,14 +1,13 @@
 package com.taogu.payment;
 
-import com.taogu.payment.bean.BusinessData;
+import java.util.Map;
+
+import com.taogu.payment.bean.PayParams;
 
 public interface Pay {
 
-  // 支付方式标识
-  public String getName();
-
   // 下订单
-  public String unifiedOrder(BusinessData data);
+  public Map<String, Object> unifiedOrder(PayParams params);
 
   // 查询订单
   public String orderQuery(String orderId);
