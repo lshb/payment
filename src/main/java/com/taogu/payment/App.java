@@ -1,20 +1,17 @@
 package com.taogu.payment;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@RestController
-@EnableAutoConfiguration
+@SpringBootApplication
 public class App {
 
-  @RequestMapping("/")
-  String home() {
-    return "Hello World!";
-  }
-
   public static void main(String[] args) throws Exception {
+    //重新启动
+    System.setProperty("spring.devtools.restart.enabled", "false");
+    //热加载
+    System.setProperty("spring.devtools.livereload.enabled ", "false");
+    //启动tomcat
     SpringApplication.run(App.class, args);
   }
-}
+} 

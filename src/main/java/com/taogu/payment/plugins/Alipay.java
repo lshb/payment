@@ -9,6 +9,11 @@ import com.alipay.api.request.AlipayTradeWapPayRequest;
 import com.taogu.payment.Pay;
 import com.taogu.payment.bean.PayParams;
 
+/**
+ * 最后是要放到plugins文件夹中的
+ * @author speedy
+ *
+ */
 public class Alipay implements Pay {
 
   private AlipayClient alipayClient = null;
