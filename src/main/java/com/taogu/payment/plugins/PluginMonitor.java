@@ -4,15 +4,9 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
-
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.support.EncodedResource;
-import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 import com.taogu.payment.Pay;
 import com.taogu.payment.PayManager;
@@ -29,8 +23,10 @@ public class PluginMonitor implements Runnable {
   private Set<String> set = new HashSet<>();
   // 插件地址
   private String pluginPath;
-  private static String configName = "plugin.properties";
-  private static String pluginClassKey = "plugin.class";
+  
+  private final static String CONFIG_NAME = "plugin.properties";
+  private final static String PLUGIN_CLASS_KEY = "plugin.class";
+  private final static String PROPERTY_SEPARATOR = ",";
 
   public PluginMonitor(String pluginPath) {
     this.pluginPath = pluginPath;
@@ -55,12 +51,12 @@ public class PluginMonitor implements Runnable {
     });
     Properties p = new Properties();
     try {
-      p.load(new FileReader(pluginPath + File.separator + configName));
+      p.load(new FileReader(pluginPath + File.separator + CONFIG_NAME));
     } catch (IOException e) {
       e.printStackTrace();
     }
-    String pluginClass = p.getProperty(pluginClassKey);
-    String[] split = pluginClass.split(",");
+    String pluginClass = p.getProperty(PLUGIN_CLASS_KEY);
+    String[] split = pluginClass.split(PROPERTY_SEPARATOR);
     for (String string : split) {
       Class<Pay> pay = null;
       try {
