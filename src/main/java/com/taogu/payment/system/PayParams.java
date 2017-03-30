@@ -1,4 +1,4 @@
-package com.taogu.payment.bean;
+package com.taogu.payment.system;
 
 public class PayParams {
 

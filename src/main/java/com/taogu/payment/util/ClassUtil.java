@@ -30,6 +30,7 @@ public final class ClassUtil {
    * @throws Exception 异常
    */
   private static void addURL(File file) {
+    URLClassLoader ucl = null;
     try {
       addURL.invoke(getClassLoad(), new Object[] { file.toURI().toURL() });
     } catch (Exception e) {

@@ -1,13 +1,15 @@
-package com.taogu.payment;
+package com.taogu.payment.system;
 
 import java.util.Map;
 
-import com.taogu.payment.bean.PayParams;
+import com.alibaba.fastjson.JSONObject;
 
 public interface Pay {
 
+  public void init(JSONObject config);
+
   // 下订单
-  public Map<String, Object> unifiedOrder(PayParams params);
+  public Map<String, Object> unifiedOrder(JSONObject params);
 
   // 查询订单
   public String orderQuery(String orderId);
