@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 
 public interface Pay {
 
+  //利用支付帐号配置页面的信息进行支付客户端初始化
   public void init(JSONObject config);
 
   // 下订单

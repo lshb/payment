@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 public class Config {
 
   // 插件的文件夹目录
-  @Value("plugin.path")
+  @Value("${plugin.path}")
   private String pluginPath;
   // 插件类
-  @Value("plugin.class")
+  @Value("${plugin.class}")
   private String pluginClass;
   // 插件监控间隔
-  @Value("plugin.period")
+  @Value("${plugin.period}")
   private long pluginPeriod;
 
   public String getPluginPath() {

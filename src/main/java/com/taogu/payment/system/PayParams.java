@@ -1,33 +1,37 @@
 package com.taogu.payment.system;
 
+import com.alibaba.fastjson.JSONObject;
+
 public class PayParams {
 
-  private String payType;
-  private String payOrderId;
-  private String desc;
+  
+  private String returnUrl;
+  private String notifyUrl;
 
-  public String getPayType() {
-    return payType;
+  private JSONObject json;
+
+  public String getReturnUrl() {
+    return returnUrl;
   }
 
-  public void setPayType(String payType) {
-    this.payType = payType;
+  public void setReturnUrl(String returnUrl) {
+    this.returnUrl = returnUrl;
   }
 
-  public String getPayOrderId() {
-    return payOrderId;
+  public String getNotifyUrl() {
+    return notifyUrl;
   }
 
-  public void setPayOrderId(String payOrderId) {
-    this.payOrderId = payOrderId;
+  public void setNotifyUrl(String notifyUrl) {
+    this.notifyUrl = notifyUrl;
   }
 
-  public String getDesc() {
-    return desc;
+  public JSONObject getJson() {
+    return json;
   }
 
-  public void setDesc(String desc) {
-    this.desc = desc;
+  public void setJson(JSONObject json) {
+    this.json = json;
   }
 
 }
