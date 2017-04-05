@@ -49,4 +49,9 @@ public class WeiXinPay implements Pay {
     return false;
   }
 
+  @Override
+  public int payId() {
+    return 2;
+  }
+
 }

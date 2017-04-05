@@ -6,11 +6,12 @@
 <title>桃谷支付系统</title>
 </head>
 <body>
-	<div id="left">
-		<ul class="nav nav-pills nav-stacked">
-			<li role="presentation" class="active"><a href="/channel/list">支付渠道</a></li>
-			<li role="presentation"><a href="#">订单管理</a></li>
-		</ul>
+	<div id="content">
+		<div th:each="c : ${channels}">
+			<label th:text="${c}"></label>
+			<a class="pull-right"  th:href="${c}">开通</a>
+		</div>
 	</div>
+
 </body>
 </html>

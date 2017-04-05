@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
 import com.taogu.payment.dao.PayAccountDao;
-import com.taogu.payment.exception.PayExeption;
 import com.taogu.payment.pay.ali.Alipay;
 import com.taogu.payment.util.ClassUtil;
+import com.taogu.payment.util.StringUtil;
 
 @Component
 public class PayManager {
@@ -22,23 +22,23 @@ public class PayManager {
   @Autowired
   private PayAccountDao payAccountDao;
 
-  
-  static{
+  static {
     PayClassManager.addPayType(Alipay.class);
     System.err.println(PayClassManager.getPay("alipay").getName());
   }
+
   /**
    * 下单接口
    * @param userId 客户端id
    * @param payType 支付类型
    * @param params 订单业务数据
    * @return 订单
-   * @throws IllegalAccessException 
-   * @throws InstantiationException 
-   * @throws PayExeption 
+   * @throws Exception 
    */
-  public Map<String, Object> pay(long userId, String payType, JSONObject params) throws PayExeption, InstantiationException, IllegalAccessException {
+  public Map<String, Object> pay(long userId, String payType, JSONObject params) throws Exception {
     Pay pay = getPayObject(userId, payType);
+    String tradeNo = StringUtil.generateTradeNo(userId, pay.payId());
+    params.put("trade_no", tradeNo);
     log.info("下单,userId:" + userId + ",type:" + payType + ",params:" + params);
     return pay.unifiedOrder(params);
   }

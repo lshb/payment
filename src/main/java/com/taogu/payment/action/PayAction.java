@@ -37,12 +37,10 @@ public class PayAction extends BasicAction {
    *                        payType,用户支付类型：支付宝、微信
    *                        
    * @return
-   * @throws InstantiationException
-   * @throws IllegalAccessException
-   * @throws PayExeption
+   * @throws Exception 
    */
   @RequestMapping("/order")
-  public Object order(String params) throws InstantiationException, IllegalAccessException, PayExeption {
+  public Object order(String params) throws Exception {
     System.err.println("params:" + params);
     JSONObject json = JSONObject.parseObject(params);
     PayParams pp = new PayParams();

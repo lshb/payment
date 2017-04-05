@@ -22,9 +22,16 @@
 <body>
 	<div class="container">
 		<div th:replace="fragments/head::#head"></div>
-		<div th:if="${message!=null}"><div th:replace="fragments/alert :: alert (type='danger', m=${message})"></div></div>
-		<div th:replace="fragments/left::#left"></div>
+		<div th:if="${message!=null}">
+			<div
+				th:replace="fragments/alert :: alert (type='danger', m=${message})"></div>
+		</div>
+		<div th:if="${session.user!=null}" class="col-sm-3">
+			<div th:replace="fragments/left::#left"></div>
+		</div>
+		<div class="col-sm-9">
 		<div th:replace="${view}::#content"></div>
+		</div>
 		<div th:replace="fragments/foot::#foot"></div>
 	</div>
 </body>

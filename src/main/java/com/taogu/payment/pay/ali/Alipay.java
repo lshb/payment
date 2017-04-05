@@ -109,4 +109,9 @@ public class Alipay implements Pay {
     return false;
   }
 
+  @Override
+  public int payId() {
+    return 1;
+  }
+
 }

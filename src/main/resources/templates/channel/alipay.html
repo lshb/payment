@@ -1,0 +1,44 @@
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>桃谷支付系统</title>
+
+</head>
+<body>
+	<div id="content">
+		<form class="form-horizontal" action="/channel/submit" method="post">
+			<input name="type" value="alipay" hidden="hidden" />
+			<div class="form-group">
+				<label for="aliAppId" class="col-sm-2 control-label">支付宝appId</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="aliAppId"
+						name="aliAppId" th:value="*{aliAppId}" 
+						placeholder="aliAppId">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="alipayPublicKey" class="col-sm-2 control-label">支付宝公钥</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="alipayPublicKey"
+						name="alipayPublicKey" th:value="*{alipayPublicKey}" placeholder="alipayPublicKey">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="appPrivateKey" class="col-sm-2 control-label">app私钥</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="appPrivateKey"
+						name="appPrivateKey" th:value="*{appPrivateKey}" placeholder="appPrivateKey">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-default">提交</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</body>
+</html>
