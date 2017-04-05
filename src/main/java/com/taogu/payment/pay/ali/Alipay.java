@@ -78,6 +78,7 @@ public class Alipay implements Pay {
     } catch (AlipayApiException e) {
       e.printStackTrace();
     }
+    System.err.println("下单生成的form：" + form);
     JSONObject json = new JSONObject();
     json.put("object", form);
     return json;

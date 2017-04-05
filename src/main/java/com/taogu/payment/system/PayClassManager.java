@@ -8,9 +8,9 @@ import org.apache.log4j.Logger;
 public class PayClassManager {
 
   private final static Logger log = Logger.getLogger(PayClassManager.class);
-  private static HashMap<String, Class<Pay>> payMap = new HashMap<String, Class<Pay>>();
+  private static HashMap<String, Class<? extends Pay>> payMap = new HashMap<>();
 
-  public static Class<Pay> getPay(String type) {
+  public static Class<? extends Pay> getPay(String type) {
     return payMap.get(type);
   }
 
@@ -19,9 +19,9 @@ public class PayClassManager {
    * @param pay
    * @return
    */
-  public static Class<Pay> addPayType(Class<Pay> pay) {
-    log.info("add one payType ,the type is" + pay.getName());
-    return payMap.put(pay.getName().toLowerCase(), pay);
+  public static Class<? extends Pay> addPayType(Class<? extends Pay> pay) {
+    log.info("add one payType ,the type is " + pay.getSimpleName());
+    return payMap.put(pay.getSimpleName().toLowerCase(), pay);
   }
 
   /**

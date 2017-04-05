@@ -5,7 +5,7 @@ import java.util.Date;
 public class User {
 
   private Long id;
-  private String nickName;
+  private String nick;
   private String password;
   private Date createTime;
   private Date updateTime;
@@ -16,14 +16,6 @@ public class User {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public String getNickName() {
-    return nickName;
-  }
-
-  public void setNickName(String nickName) {
-    this.nickName = nickName;
   }
 
   public String getPassword() {
@@ -48,6 +40,14 @@ public class User {
 
   public void setUpdateTime(Date updateTime) {
     this.updateTime = updateTime;
+  }
+
+  public String getNick() {
+    return nick;
+  }
+
+  public void setNick(String nick) {
+    this.nick = nick;
   }
 
 }

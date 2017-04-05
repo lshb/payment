@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>桃谷支付系统</title>
+</head>
+<body>
+	<div id="left" th:if="${session.user!=null}" class="col-sm-3">
+		<ul class="nav nav-pills nav-stacked">
+			<li role="presentation" class="active"><a href="#">订单管理</a></li>
+			<li role="presentation"><a href="#">支付渠道</a></li>
+		</ul>
+	</div>
+</body>
+</html>

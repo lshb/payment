@@ -2,6 +2,7 @@ package com.taogu.payment.util;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -9,6 +10,7 @@ import java.net.URLClassLoader;
 public final class ClassUtil {
 
   private static Method addURL = initAddMethod();
+
   /** 
    * 初始化addUrl 方法.
    * @return 可访问addUrl方法的Method对象
@@ -40,6 +42,7 @@ public final class ClassUtil {
   private static ClassLoader getClassLoad() {
     return Thread.currentThread().getContextClassLoader();
   }
+
 
   /** 
    * 循环遍历目录，找出所有的资源路径。

@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
-import com.taogu.payment.domain.PayAccountMapper;
+import com.taogu.payment.dao.PayAccountDao;
 import com.taogu.payment.exception.PayExeption;
+import com.taogu.payment.pay.ali.Alipay;
 import com.taogu.payment.util.ClassUtil;
 
 @Component
@@ -19,8 +20,13 @@ public class PayManager {
   private HashMap<Long, Map<String, Pay>> pays = new HashMap<>();
 
   @Autowired
-  private PayAccountMapper payAccount;
+  private PayAccountDao payAccountDao;
 
+  
+  static{
+    PayClassManager.addPayType(Alipay.class);
+    System.err.println(PayClassManager.getPay("alipay").getName());
+  }
   /**
    * 下单接口
    * @param userId 客户端id
@@ -75,7 +81,7 @@ public class PayManager {
   private Pay initPay(long userId, String payType) throws InstantiationException, IllegalAccessException {
     Pay pay = ClassUtil.getInstance(PayClassManager.getPay(payType));
     // 从库中拿到支付类型的配置实例化对象
-    String config = payAccount.find(userId, payType);
+    String config = payAccountDao.find(userId, payType);
     JSONObject payConfig = JSONObject.parseObject(config);
     pay.init(payConfig);
     log.info("初始化支付客户端,u:" + userId + ",type:" + payType);

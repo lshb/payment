@@ -21,7 +21,8 @@ import com.taogu.payment.system.PayManager;
 import com.taogu.payment.system.PayParams;
 
 @RestController
-public class PayAction {
+@RequestMapping("/pay")
+public class PayAction extends BasicAction {
 
   private static Logger log = Logger.getLogger(PayAction.class);
   @Autowired
@@ -40,8 +41,8 @@ public class PayAction {
    * @throws IllegalAccessException
    * @throws PayExeption
    */
-  @RequestMapping("/pay")
-  public Object makePay(String params) throws InstantiationException, IllegalAccessException, PayExeption {
+  @RequestMapping("/order")
+  public Object order(String params) throws InstantiationException, IllegalAccessException, PayExeption {
     System.err.println("params:" + params);
     JSONObject json = JSONObject.parseObject(params);
     PayParams pp = new PayParams();
