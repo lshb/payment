@@ -1,0 +1,40 @@
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>桃谷支付系统</title>
+</head>
+<body>
+	<div id="content">
+		<script type="text/javascript">
+		$(document).ready(function(){
+			  $("#testOneTime").click(function(){
+				  var type = $("#type").val();
+				  location.href="/test/"+type;
+			  });
+			});
+		</script>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div th:text="'支付类型：'+${type}"></div>
+			</div>
+			<div class="panel-body">
+				<form class="form-horizontal" action="/channel/submit" method="post">
+					<input id="type" name="type" th:value="*{type}" hidden="hidden" />
+					<div th:replace="'/channel/'+${type}::#content"></div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-1">
+							<button type="submit" class="btn btn-default">提交</button>
+						</div>
+						<div class="col-sm-2">
+							<button type="button" id="testOneTime" class="btn btn-default">测试一下</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

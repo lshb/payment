@@ -34,7 +34,7 @@ public class BasicAction {
    * @param message 视图中显示的信息
    * @return
    */
-  public ModelAndView getModeView(String view, String message) {
+  public ModelAndView getLayoutModeAndView(String view, String message) {
     ModelAndView mav = new ModelAndView(LAYOUT_VIEW);
     mav.addObject(CONTENT_VIEW, view);
     mav.addObject(VIEW_MESSAGE, message);

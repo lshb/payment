@@ -19,7 +19,7 @@ public class Alipay implements Pay {
   private static String URL = "https://openapi.alipay.com/gateway.do";
   private static String FORMAT = "JSON";
   private static String CHARSET = "utf-8";
-  private static String SIGN_TYPE = "RSA2";
+  private static String SIGN_TYPE = null;
   private String notify_url;
   private String return_url;
   private String appPrivateKey;
@@ -42,7 +42,7 @@ public class Alipay implements Pay {
   private static String PRODUCT_CODE = "QUICK_WAP_PAY";
 
   // 下单接口
-  public JSONObject unifiedOrder(JSONObject data) {
+  public Object unifiedOrder(JSONObject data) {
     // 商户订单号，商户网站订单系统中唯一订单号，必填
     String out_trade_no = data.getString("trade_no");
     // 订单名称，必填
@@ -78,10 +78,7 @@ public class Alipay implements Pay {
     } catch (AlipayApiException e) {
       e.printStackTrace();
     }
-    System.err.println("下单生成的form：" + form);
-    JSONObject json = new JSONObject();
-    json.put("object", form);
-    return json;
+    return form;
   }
 
   public String orderQuery(String orderId) {

@@ -8,36 +8,29 @@
 </head>
 <body>
 	<div id="content">
-		<form class="form-horizontal" action="/channel/submit" method="post">
-			<input name="type" value="alipay" hidden="hidden" />
 			<div class="form-group">
-				<label for="aliAppId" class="col-sm-2 control-label">支付宝appId</label>
+				<label for="aliAppId" class="col-sm-2 control-label">合作者身份</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="aliAppId"
 						name="aliAppId" th:value="*{aliAppId}" 
-						placeholder="aliAppId">
+						placeholder="支付宝平台上合作者身份（PID）">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="alipayPublicKey" class="col-sm-2 control-label">支付宝公钥</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="alipayPublicKey"
-						name="alipayPublicKey" th:value="*{alipayPublicKey}" placeholder="alipayPublicKey">
+				<textarea rows="4" cols="5" class="form-control" id="alipayPublicKey"
+						name="alipayPublicKey" placeholder="支付宝公钥，不是app公钥" th:text="${alipayPublicKey}">
+						</textarea>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="appPrivateKey" class="col-sm-2 control-label">app私钥</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="appPrivateKey"
-						name="appPrivateKey" th:value="*{appPrivateKey}" placeholder="appPrivateKey">
+				<textarea rows="4" cols="5" class="form-control" id="appPrivateKey"
+						name="appPrivateKey" th:text="*{appPrivateKey}" placeholder="app私钥"></textarea>
 				</div>
 			</div>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-default">提交</button>
-				</div>
-			</div>
-		</form>
 	</div>
 
 </body>

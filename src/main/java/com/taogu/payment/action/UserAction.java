@@ -34,7 +34,7 @@ public class UserAction extends BasicAction {
   @RequestMapping("/login")
   public ModelAndView login(String nick, String password) {
     if (ValidateUtil.stringsHaveEmpty(nick, password)) {
-      return getModeView("login", "用户名、密码不能为空！");
+      return getLayoutModeAndView("login", "用户名、密码不能为空！");
     }
     User user = UserMapper.findByNick(nick);
     String pass = null;
@@ -47,7 +47,7 @@ public class UserAction extends BasicAction {
       getHttpSession().setAttribute("user", user);
       return getModeView("index");
     }
-    return getModeView("login", "密码不正确！");
+    return getLayoutModeAndView("login", "密码不正确！");
   }
 
   @RequestMapping("/logout")
@@ -74,14 +74,14 @@ public class UserAction extends BasicAction {
   @PostMapping("/register")
   public ModelAndView register(String nick, String password, String rePassword, String phone, String validateCode) {
     if (ValidateUtil.stringsHaveEmpty(nick, password, rePassword, phone, validateCode)) {
-      return getModeView("register", "注册参数不能为空！");
+      return getLayoutModeAndView("register", "注册参数不能为空！");
     }
     Long id = UserMapper.exit(nick);
     if (id != null) {
-      return getModeView("register", "已经存在此用户名！");
+      return getLayoutModeAndView("register", "已经存在此用户名！");
     }
     if (!password.equals(rePassword)) {
-      return getModeView("register", "两次密码不一致！");
+      return getLayoutModeAndView("register", "两次密码不一致！");
     }
     // --TODO 发送短信完成后打开
     // Object code = getHttpSession().getAttribute("validateCode");
@@ -90,10 +90,10 @@ public class UserAction extends BasicAction {
     // }
     try {
       UserMapper.insert(nick, DigestUtils.md5DigestAsHex(password.getBytes("utf-8")), phone);
-      return getModeView("login", "注册成功！");
+      return getLayoutModeAndView("login", "注册成功！");
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
-      return getModeView("register", e.getMessage());
+      return getLayoutModeAndView("register", e.getMessage());
     }
   }
 }

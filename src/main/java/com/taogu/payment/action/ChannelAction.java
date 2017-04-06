@@ -35,7 +35,10 @@ public class ChannelAction extends BasicAction {
 
   @GetMapping("/{type}")
   public ModelAndView channel(@PathVariable("type") String type) {
-    ModelAndView modeView = getModeView("/channel/" + type);
+    if ("view".equals(type)) {
+      return null;
+    }
+    ModelAndView modeView = getChannelModelAndView(type);
     User user = (User) getHttpSession().getAttribute("user");
     String config = payAccountDao.find(user.getId(), type);
     modeView.addAllObjects(JSON.parseObject(config));
@@ -43,12 +46,18 @@ public class ChannelAction extends BasicAction {
   }
 
   @PostMapping("/submit")
-  public ModelAndView submitChannel(@RequestParam Map<String, String> config, @RequestParam("type") String type) {
+  public String submitChannel(@RequestParam Map<String, String> config, @RequestParam("type") String type) {
     JSONObject json = new JSONObject();
     json.putAll(config);
     User user = (User) getHttpSession().getAttribute("user");
     payAccountDao.insertOrUpdate(user.getId(), type, json.toString());
-    return list();
+    return "redirect:"+type;
+  }
+
+  private ModelAndView getChannelModelAndView(String type) {
+    ModelAndView modeView = getModeView("/channel/view");
+    modeView.addObject("type", type);
+    return modeView;
   }
 
 }

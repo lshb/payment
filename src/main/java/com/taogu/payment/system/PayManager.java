@@ -35,7 +35,7 @@ public class PayManager {
    * @return 订单
    * @throws Exception 
    */
-  public Map<String, Object> pay(long userId, String payType, JSONObject params) throws Exception {
+  public Object pay(long userId, String payType, JSONObject params) throws Exception {
     Pay pay = getPayObject(userId, payType);
     String tradeNo = StringUtil.generateTradeNo(userId, pay.payId());
     params.put("trade_no", tradeNo);

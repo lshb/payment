@@ -7,11 +7,14 @@
 </head>
 <body>
 	<div id="content">
-		<div th:each="c : ${channels}">
-			<label th:text="${c}"></label>
-			<a class="pull-right"  th:href="${c}">开通</a>
+		<div class="panel panel-default">
+			<div class="panel-heading">渠道列表</div>
+			<div class="panel-body">
+				<div th:each="c : ${channels}">
+					<label th:text="${c}"></label> <a class="pull-right" th:href="${c}">开通</a>
+				</div>
+			</div>
 		</div>
 	</div>
-
 </body>
 </html>

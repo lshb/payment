@@ -7,29 +7,7 @@
 </head>
 <body>
 	<div id="content">
-		<form th:action="@{/login}" method="post">
-			<div>
-				<select name="payType">
-					<option value="alipay">支付宝</option>
-					<option value="weixin">微信</option>
-				</select>
-			</div>
-			<p th:text="${session.nick}" th:unless="${session == null}">[...]</p>
-			<p th:text="${param.nick}" th:unless="${param.nick== null}">Test</p>
-			<div>
-				<label> 用户名 : <input type="text" name="username" />
-				</label>
-			</div>
-			<div>
-				<label> 密 码 : <input type="password" name="password" />
-				</label>
-			</div>
-
-			<div>
-				<input type="submit" class="btn btn-sm" value="登录" />
-			</div>
-		</form>
+		<th:block th:utext="${form}"></th:block>
 	</div>
-
 </body>
 </html>

@@ -4,10 +4,12 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.taogu.payment.domain.User;
 import com.taogu.payment.exception.PayExeption;
 import com.taogu.payment.system.PayManager;
 
@@ -18,23 +20,16 @@ public class TestAction extends BasicAction {
   @Autowired
   private PayManager pay;
 
-  @RequestMapping("/alipay")
-  public ModelAndView alipayView() {
-    return getModeView("alipay");
-  }
-
-  @RequestMapping("/alipayPay")
-  public String alipayPay(String orderName, String orderDesc, String orderMoney) throws Exception {
-    System.err.println(orderName);
-    System.err.println(orderDesc);
-    System.err.println(orderMoney);
+  @RequestMapping("/{type}")
+  public ModelAndView alipay(@PathVariable("type") String type) throws Exception {
     JSONObject params = new JSONObject();
-    params.put("body", orderDesc);
-    params.put("subject", orderName);
-    params.put("amount", orderMoney);
-    Map<String, Object> json = null;
+    params.put("body", "测试订单描述");
+    params.put("subject", "测试订单名称");
+    params.put("amount", "0.01");
+    Object obj = null;
+    User user = (User) getHttpSession().getAttribute("user");
     try {
-      json = pay.pay(1, "alipay", params);
+      obj = pay.pay(user.getId(), type, params);
     } catch (InstantiationException e) {
       e.printStackTrace();
     } catch (IllegalAccessException e) {
@@ -42,17 +37,8 @@ public class TestAction extends BasicAction {
     } catch (PayExeption e) {
       e.printStackTrace();
     }
-    return (String) json.get("object");
-  }
-
-  @RequestMapping("/weixin")
-  public ModelAndView weixinView() {
-    return getModeView("weixin");
-  }
-
-  @RequestMapping("/weixinPay")
-  public ModelAndView weixinPay() {
-
-    return getModeView("weixin");
+    ModelAndView modeView = new ModelAndView("test");
+    modeView.addObject("form", obj);
+    return modeView;
   }
 }
