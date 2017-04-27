@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class App {
+public class Application {
 
   public static void main(String[] args) throws Exception {
     // 重新启动
@@ -16,6 +16,6 @@ public class App {
 //    pm.setPluginPath("./plugins");
 //    pm.startPluginMonitor();
     // 启动tomcat
-    SpringApplication.run(App.class, args);
+    SpringApplication.run(Application.class, args);
   }
 }

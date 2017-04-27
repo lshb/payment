@@ -7,7 +7,16 @@
 </head>
 <body>
 	<div id="left">
-		<div></div>
+		<div class="dropdown">
+			<div class="btn dropdown-toggle" id="dropdownMenu1"
+				data-toggle="dropdown">
+				<label th:text="${session.app.name}"></label> <span class="caret"></span>
+			</div>
+			<ul th:each="app : ${session.apps}" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+				<li role="presentation"><a role="menuitem" tabindex="-1"
+					href="#" th:text="${app.name}"></a></li>
+			</ul>
+		</div>
 		<div>
 			<ul class="nav nav-pills nav-stacked">
 				<li role="presentation" class="active"><a href="/channel/list">支付渠道</a></li>

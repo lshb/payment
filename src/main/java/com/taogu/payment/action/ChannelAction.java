@@ -43,7 +43,7 @@ public class ChannelAction extends BasicAction {
     }
     ModelAndView modeView = getChannelModelAndView(type);
     User user = (User) getHttpSession().getAttribute("user");
-    String config = payAccountDao.find(user.getId(), type);
+    String config = payAccountDao.find(String.valueOf(user.getId()), type);
     modeView.addAllObjects(JSON.parseObject(config));
     return modeView;
   }
@@ -54,7 +54,7 @@ public class ChannelAction extends BasicAction {
     json.putAll(config);
     User user = (User) getHttpSession().getAttribute("user");
     long userId = user.getId();
-    payAccountDao.insertOrUpdate(userId, type, json.toString());
+    payAccountDao.insertOrUpdate(String.valueOf(userId), type, json.toString());
     payManager.removePayObject(userId, type);
     return "redirect:" + type;
   }

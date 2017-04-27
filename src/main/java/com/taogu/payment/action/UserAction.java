@@ -1,6 +1,7 @@
 package com.taogu.payment.action;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Random;
 
 import org.apache.log4j.Logger;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.taogu.payment.dao.AppDao;
 import com.taogu.payment.dao.UserDao;
+import com.taogu.payment.domain.App;
 import com.taogu.payment.domain.User;
 import com.taogu.payment.util.ValidateUtil;
 
@@ -23,7 +26,9 @@ public class UserAction extends BasicAction {
 
   private final static Logger log = Logger.getLogger(UserAction.class);
   @Autowired
-  private UserDao UserMapper;
+  private UserDao userDao;
+  @Autowired
+  private AppDao appDao;
 
   @RequestMapping("/loginView")
   public ModelAndView loginView() {
@@ -36,7 +41,7 @@ public class UserAction extends BasicAction {
     if (ValidateUtil.stringsHaveEmpty(nick, password)) {
       return getLayoutModeAndView("login", "用户名、密码不能为空！");
     }
-    User user = UserMapper.findByNick(nick);
+    User user = userDao.findByNick(nick);
     String pass = null;
     try {
       pass = DigestUtils.md5DigestAsHex(password.getBytes("utf-8"));
@@ -44,7 +49,17 @@ public class UserAction extends BasicAction {
       e.printStackTrace();
     }
     if (user.getPassword().equals(pass)) {
+      // 保存用户信息到session
       getHttpSession().setAttribute("user", user);
+      // 保存用户的app信息到session
+      List<App> apps = appDao.findByUser(user.getId());
+      getHttpSession().setAttribute("apps", apps);
+      // 保存用户的第一个app
+      App app = new App();
+      if (apps != null && apps.size() > 0) {
+        app = apps.get(0);
+      }
+      getHttpSession().setAttribute("app", app);
       return getModeView("index");
     }
     return getLayoutModeAndView("login", "密码不正确！");
@@ -52,7 +67,7 @@ public class UserAction extends BasicAction {
 
   @RequestMapping("/logout")
   public ModelAndView logout() {
-    getHttpSession().removeAttribute("user");
+    getHttpSession().invalidate();
     return getModeView("login");
   }
 
@@ -76,7 +91,7 @@ public class UserAction extends BasicAction {
     if (ValidateUtil.stringsHaveEmpty(nick, password, rePassword, phone, validateCode)) {
       return getLayoutModeAndView("register", "注册参数不能为空！");
     }
-    Long id = UserMapper.exit(nick);
+    Long id = userDao.exit(nick);
     if (id != null) {
       return getLayoutModeAndView("register", "已经存在此用户名！");
     }
@@ -89,7 +104,7 @@ public class UserAction extends BasicAction {
     // return getModeView("register", "校验码校验失败！");
     // }
     try {
-      UserMapper.insert(nick, DigestUtils.md5DigestAsHex(password.getBytes("utf-8")), phone);
+      userDao.insert(nick, DigestUtils.md5DigestAsHex(password.getBytes("utf-8")), phone);
       return getLayoutModeAndView("login", "注册成功！");
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();

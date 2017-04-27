@@ -91,7 +91,7 @@ public class PayManager {
   private Pay initPay(long userId, String payType) throws InstantiationException, IllegalAccessException {
     Pay pay = ClassUtil.getInstance(PayClassManager.getPay(payType));
     // 从库中拿到支付类型的配置实例化对象
-    String config = payAccountDao.find(userId, payType);
+    String config = payAccountDao.find(String.valueOf(userId), payType);
     JSONObject payConfig = JSONObject.parseObject(config);
     pay.init(payConfig);
     log.info("初始化支付客户端,u:" + userId + ",type:" + payType);
