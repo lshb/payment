@@ -5,11 +5,9 @@ import java.util.Date;
 public class PayAccount {
 
   private long id;
-  private long user_id;
+  private long userId;
   private String type;
   private String config;
-  private Date createTime;
-  private Date updateTime;
 
   public long getId() {
     return id;
@@ -17,14 +15,6 @@ public class PayAccount {
 
   public void setId(long id) {
     this.id = id;
-  }
-
-  public long getUser_id() {
-    return user_id;
-  }
-
-  public void setUser_id(long user_id) {
-    this.user_id = user_id;
   }
 
   public String getType() {
@@ -43,20 +33,12 @@ public class PayAccount {
     this.config = config;
   }
 
-  public Date getCreateTime() {
-    return createTime;
+  public long getUserId() {
+    return userId;
   }
 
-  public void setCreateTime(Date createTime) {
-    this.createTime = createTime;
-  }
-
-  public Date getUpdateTime() {
-    return updateTime;
-  }
-
-  public void setUpdateTime(Date updateTime) {
-    this.updateTime = updateTime;
+  public void setUserId(long userId) {
+    this.userId = userId;
   }
 
 }

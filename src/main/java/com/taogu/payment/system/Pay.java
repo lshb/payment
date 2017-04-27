@@ -1,7 +1,5 @@
 package com.taogu.payment.system;
 
-import java.util.Map;
-
 import com.alibaba.fastjson.JSONObject;
 
 public interface Pay {

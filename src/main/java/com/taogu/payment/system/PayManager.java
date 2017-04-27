@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSONObject;
 import com.taogu.payment.dao.PayAccountDao;
 import com.taogu.payment.pay.ali.Alipay;
+import com.taogu.payment.pay.weixin.WeiXinPay;
 import com.taogu.payment.util.ClassUtil;
 import com.taogu.payment.util.StringUtil;
 
@@ -24,6 +25,7 @@ public class PayManager {
 
   static {
     PayClassManager.addPayType(Alipay.class);
+    PayClassManager.addPayType(WeiXinPay.class);
     System.err.println(PayClassManager.getPay("alipay").getName());
   }
 
@@ -69,6 +71,14 @@ public class PayManager {
       ps.put(payType, pay);
       return pay;
     }
+  }
+
+  public void removePayObject(long userId, String payType) {
+    Map<String, Pay> map = pays.get(userId);
+    if (map == null) {
+      return;
+    }
+    map.remove(payType);
   }
 
   /**

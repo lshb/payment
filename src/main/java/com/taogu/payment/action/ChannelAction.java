@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.taogu.payment.dao.PayAccountDao;
 import com.taogu.payment.domain.User;
 import com.taogu.payment.system.PayClassManager;
+import com.taogu.payment.system.PayManager;
 
 @Controller
 @RequestMapping("/channel")
@@ -24,6 +25,8 @@ public class ChannelAction extends BasicAction {
 
   @Autowired
   private PayAccountDao payAccountDao;
+  @Autowired
+  private PayManager payManager;
 
   @GetMapping("/list")
   public ModelAndView list() {
@@ -50,8 +53,10 @@ public class ChannelAction extends BasicAction {
     JSONObject json = new JSONObject();
     json.putAll(config);
     User user = (User) getHttpSession().getAttribute("user");
-    payAccountDao.insertOrUpdate(user.getId(), type, json.toString());
-    return "redirect:"+type;
+    long userId = user.getId();
+    payAccountDao.insertOrUpdate(userId, type, json.toString());
+    payManager.removePayObject(userId, type);
+    return "redirect:" + type;
   }
 
   private ModelAndView getChannelModelAndView(String type) {

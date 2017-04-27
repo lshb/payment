@@ -1,7 +1,5 @@
 package com.taogu.payment.action;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,11 +19,21 @@ public class TestAction extends BasicAction {
   private PayManager pay;
 
   @RequestMapping("/{type}")
-  public ModelAndView alipay(@PathVariable("type") String type) throws Exception {
+  public ModelAndView pay(@PathVariable("type") String type) throws Exception {
     JSONObject params = new JSONObject();
-    params.put("body", "测试订单描述");
-    params.put("subject", "测试订单名称");
-    params.put("amount", "0.01");
+    if ("alipay".equals(type)) {
+      params.put("body", "测试订单描述");
+      params.put("subject", "测试订单名称");
+      params.put("amount", "0.01");
+    } else if ("weixinpay".equals(type)) {
+      params.put("body", "ceshiyixia");
+      params.put("total_fee", 1);
+      params.put("spbill_create_ip", "192.168.0.1");
+//      params.put("trade_type", "JSAPI");
+      params.put("trade_type", "MWEB");
+//      params.put("openId", "12312312312");
+      params.put("notify_url", "https://www.91taogu.com");
+    }
     Object obj = null;
     User user = (User) getHttpSession().getAttribute("user");
     try {

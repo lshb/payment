@@ -16,10 +16,10 @@ import com.taogu.payment.system.Pay;
 public class Alipay implements Pay {
 
   private AlipayClient alipayClient = null;
-  private static String URL = "https://openapi.alipay.com/gateway.do";
+  private static String URL = "https://openapi.alipaydev.com/gateway.do";
   private static String FORMAT = "JSON";
   private static String CHARSET = "utf-8";
-  private static String SIGN_TYPE = null;
+  private static String SIGN_TYPE = "RSA2";
   private String notify_url;
   private String return_url;
   private String appPrivateKey;

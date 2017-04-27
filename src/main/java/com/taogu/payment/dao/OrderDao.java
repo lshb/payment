@@ -10,12 +10,12 @@ import org.apache.ibatis.annotations.Select;
 import com.taogu.payment.domain.Payment;
 
 @Mapper
-public interface PaymentDao {
+public interface OrderDao {
 
-  @Select("SELECT * FROM payment WHERE user_id = #{userId}")
+  @Select("SELECT * FROM order WHERE user_id = #{userId}")
   List<Payment> findByUser(@Param("userId") int userId);
 
-  @Insert("INSERT INTO payment(order_id, cost,status,user_id,type) VALUES(#{orderId}, #{cost},#{status}),#{userId},#{type}")
+  @Insert("INSERT INTO order(id, cost,status,user_id,type) VALUES(#{orderId}, #{cost},#{status},#{userId},#{type})")
   int insert(@Param("orderId") String orderId, @Param("cost") int cost, @Param("status") int status, @Param("userId") int userId,
       @Param("type") int type);
 
